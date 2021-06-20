@@ -5,17 +5,10 @@ import datetime
 
 HOME_URL = 'https://www.larepublica.co/'
 
-XPATH_LINK_TO_ARTICLE =  '//a[contains(@class,"kicker")]/@href'
+XPATH_LINK_TO_ARTICLE = '//div[@class="news V_Title_Img"]/text-fill/a/@href'
+XPATH_TITLE = '//div[@class="mb-auto"]/text-fill/span/text()'
 XPATH_SUMMARY = '//div[@class="lead"]/p/text()'
-XPATH_BODY = '//div[@class="html-content"]//text()'
-
-def get_title(link):
-    url = link.split('/')[-1]
-    title_list = url.split('-')[:-1]
-    title = " ".join(title_list)
-
-    return(title)
-
+XPATH_BODY = '//div[@class="html-content"]/p/text()'
 
 def parse_notice(link, today):
     try:
@@ -25,7 +18,8 @@ def parse_notice(link, today):
             parsed = html.fromstring(notice)
             
             try:
-                title = get_title(link)
+                title = parsed.xpath(XPATH_TITLE)[0]
+                title = title.replace('\"', '')
                 summary = parsed.xpath(XPATH_SUMMARY)[0]
                 body = parsed.xpath(XPATH_BODY)
             except IndexError:
