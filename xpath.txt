@@ -1,0 +1,5 @@
+Links = //h2[@style="font-size: 12px; line-height: 16px;"]/a/@href
+Titulo = //h2[@style="font-size: 45px; line-height: 49px;"]/span
+Resumen = //div[@class="lead"]/p
+Cuerpo = //div[@class="html-content"]/p')
+
